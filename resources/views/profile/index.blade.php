@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+{{ $user->id }}
     <div class="container">
         <div class="row">
             <div class="col-3 p-4 center d-inline-flex">
@@ -10,10 +11,11 @@
             <div class="col-9 pt-2">
                 <div class="d-flex justify-content-between align-items-baseline">
                     <h1>{{   $user->username   }}</h1>
-                    <a href="#">Add New Post</a>
+                    <a href="/p/create">Add New Post</a>
                 </div>
+                <a href="/profile/{{ $user->id }}/edit">Edit Profile</a>
                 <div class="d-flex">
-                    <div class="pr-5" style="padding-right:3%;"><strong>200</strong> posts</div>
+                    <div class="pr-5" style="padding-right:3%;"><strong>{{ $user->posts->count() }}</strong> posts</div>
                     <div class="pr-5" style="padding-right:3%;"><strong>250</strong> followers</div>
                     <div class="pr-5" style="padding-right:3%;"><strong>211</strong> following</div>
                 </div>
@@ -27,15 +29,14 @@
             </div>
         </div>
         <div class="row pt-5">
-            <div class="col-4">
-                <img src="/images/3.jpg" alt="" style="max-width: 250px;" class="w-100">
+            @foreach ($user->posts as $posts)
+            <div class="col-4 pb-5">
+                <a href="/p/{{ $posts->id }}">
+                <img src="/storage/{{ $posts->image}}" alt="" style="max-width: 250px;" class="w-100">
+                </a>
             </div>
-            <div class="col-4">
-                <img src="/images/4.jpg" alt="" style="max-width: 250px;" class="w-100">
-            </div>
-            <div class="col-4">
-                <img src="/images/5.jpg" alt="" style="max-width: 250px;" class="w-100">
-            </div>
+            @endforeach
+            
         </div>
     </div>
 @endsection

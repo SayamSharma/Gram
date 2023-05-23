@@ -1,19 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-{{ $user->id }}
+{{-- {{ $user->id }} --}}
     <div class="container">
         <div class="row">
             <div class="col-3 p-4 center d-inline-flex">
-                <img src="/images/1.jpg" class="rounded-circle"
+                <img src="{{ $user->profile->profileImage() }}" class="rounded-circle"
                     style=" width: 60%; object-fit: contain; margin: auto;">
             </div>
             <div class="col-9 pt-2">
                 <div class="d-flex justify-content-between align-items-baseline">
-                    <h1>{{   $user->username   }}</h1>
+                    <div class="d-flex align-items-center pb-3">
+                        <div class="h4">{{   $user->username   }}</div>
+
+                    <button class="btn btn-primary ml-4">Follow</button>
+                    </div>
+
+                    @can('update',$user->profile)
                     <a href="/p/create">Add New Post</a>
+                    @endcan
                 </div>
+                @can('update',$user->profile)
                 <a href="/profile/{{ $user->id }}/edit">Edit Profile</a>
+                @endcan
                 <div class="d-flex">
                     <div class="pr-5" style="padding-right:3%;"><strong>{{ $user->posts->count() }}</strong> posts</div>
                     <div class="pr-5" style="padding-right:3%;"><strong>250</strong> followers</div>

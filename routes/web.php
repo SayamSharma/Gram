@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\FollowsController;
 use App\Http\Controllers\ParentChildController;
 use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfilesController;
+use App\Mail\NewUserWelcomeMail;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,12 +18,16 @@ use App\Http\Controllers\ProfilesController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
+Route::get('/email',function(){
+     return new NewUserWelcomeMail();
+});
+
+Route::post('/follow/{user}',[FollowsController::class,'store']);
+
+Route::get('/',[PostsController::class,'index']);
 Route::get('/p/create',[PostsController::class,'create'])->name('post.create');
 Route::post('/p',[PostsController::class,'store'])->name('post.store');
 Route::get('/p/{post}',[PostsController::class,'show']);
